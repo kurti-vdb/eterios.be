@@ -1,0 +1,10 @@
+agm-map {
+  width: 600px;
+  height: 400px;
+  margin: 50px auto;
+}
+
+agm-map-container-inner {
+  margin: 0 auto;
+  border-radius: 30px;
+}

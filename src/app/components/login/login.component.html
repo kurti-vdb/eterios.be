@@ -1,0 +1,30 @@
+<div class="container">
+
+  <div class="logo-wrapper">
+      <!-- <img src="assets/images/logo-login.png" width="60" height="60" > -->
+      <div>
+        <h2><strong>Eterios</strong></h2>
+        <h4>Login</h4>
+      </div>
+  </div>
+
+  <div class="contact-form">
+      <form [formGroup]="loginForm"  (ngSubmit)="login()">
+          <div class="input-group">
+              <div class="control" [ngClass]="username?.value.length === 0 ? '' : 'filled'">
+                  <input type="text" autocomplete="off" name="x" formControlName="username">
+                  <label for="name">Gebruikersnaam</label>
+              </div>
+              <div class="control" [ngClass]="password?.value.length === 0 ? '' : 'filled'">
+                <input type="password" autocomplete="new-password" name="x" formControlName="password">
+                <label for="name">Paswoord</label>
+              </div>
+              <div class="control">
+                <button type="submit" class="next" [disabled]="isDisabled()">{{ 'login' | translate }}</button>
+              </div>
+
+          </div>
+      </form>
+  </div>
+
+</div>

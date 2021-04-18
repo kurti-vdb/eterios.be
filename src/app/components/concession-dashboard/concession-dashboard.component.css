@@ -1,0 +1,11 @@
+.wrapper {
+  margin: 50px auto ;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+app-upload {
+  margin: 0 auto;
+  width: 360px;
+}

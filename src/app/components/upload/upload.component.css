@@ -1,0 +1,34 @@
+label, .upload-btn {
+  cursor: pointer;
+  background: #132051;
+  cursor: pointer;
+  color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+#upload-images {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  top: -50px;
+}
+
+.files {
+  display: flex;
+  font-size: 12px;
+}
+
+.files span {
+  margin-right: 20px;
+}
+
+button {
+  border: none;
+}
+
+.upload-btn:disabled {
+  opacity: 0.75;
+  background: #ccc;
+}
+
