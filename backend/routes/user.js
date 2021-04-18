@@ -160,7 +160,7 @@ router.post("/create", checkAuth.oAuth, (req, res, next) => {
 
         user.save()
           .then(response => {
-            const token = jwt.sign({ email: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: "48h" });
+            const token = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: "48h" });
             res.status(200).json({ token: token, expiresIn: 3600 * 48 });
           })
           .catch(err => {
@@ -176,14 +176,12 @@ router.post("/create", checkAuth.oAuth, (req, res, next) => {
 });
 
 
-
-
 function generateAngularUser(fetchedUser) {
   return {
     id: fetchedUser._id,
     username: fetchedUser.username,
     language: fetchedUser.language,
-    organisationName: fetchedUser.organisationName
+    organisation: fetchedUser.organisation
   }
 }
 

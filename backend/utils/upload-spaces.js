@@ -55,7 +55,6 @@ const uploadspacesorg = multer({
 });
 
 
-//Not working
 const uploadspaces = multer({
   limits: limits,
   fileFilter: fileFilter,
@@ -73,6 +72,7 @@ const uploadspaces = multer({
           cb(null, req.city + "/original/" + file.originalname)
         },
         transform: function (req, file, cb) {
+          console.log(req)
           cb(null, sharp().withMetadata({
             exif: {
               IFD0: {
@@ -88,7 +88,14 @@ const uploadspaces = multer({
           cb(null, req.city + "/thumbnail-250/" + file.originalname)
         },
         transform: function (req, file, cb) {
-          cb(null, sharp().resize(250).withMetadata().jpeg())
+          cb(null, sharp().resize(250).withMetadata({
+            exif: {
+              IFD0: {
+                Copyright: 'Eterios.be',
+                City: req.city
+              }
+            }
+          }).jpeg())
         }
       },{
         id: 'thumbnail-750',
@@ -96,7 +103,14 @@ const uploadspaces = multer({
           cb(null, req.city + "/750/" + file.originalname)
         },
         transform: function (req, file, cb) {
-          cb(null, sharp().resize(750).withMetadata().jpeg())
+          cb(null, sharp().resize(750).withMetadata({
+            exif: {
+              IFD0: {
+                Copyright: 'Eterios.be',
+                City: req.city
+              }
+            }
+          }).jpeg())
         }
       }]
   }),
