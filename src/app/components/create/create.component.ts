@@ -40,7 +40,7 @@ export class CreateComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/upload']);
+          this.router.navigate(['/login']);
         }, err => {
           console.log(err);
         });
