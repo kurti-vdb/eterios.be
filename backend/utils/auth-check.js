@@ -14,14 +14,13 @@ module.exports = {
       try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, JWT_SECRET, function(err, decodedToken) {
-          console.log(req)
           req.userID = decodedToken.id;
           req.city = decodedToken.city;
         });
         next();
       }
       catch(err) {
-        logger.error('catch' + err);
+        logger.error(err);
         res.status(401).json({ message: "Auth failed", error: err })
       }
     }

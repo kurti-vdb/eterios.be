@@ -72,7 +72,6 @@ const uploadspaces = multer({
           cb(null, req.city + "/original/" + file.originalname)
         },
         transform: function (req, file, cb) {
-          console.log(req)
           cb(null, sharp().withMetadata({
             exif: {
               IFD0: {
