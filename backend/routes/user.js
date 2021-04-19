@@ -80,7 +80,7 @@ router.post('/upload', checkAuth.oAuth, uploadspaces.single('file'), (req, res) 
 });
 
 
-router.post("/create", checkAuth.oAuth, (req, res, next) => {
+router.post("/create", (req, res, next) => {
 
   User.findOne({ 'username': req.body.username })
     .then(user => {
