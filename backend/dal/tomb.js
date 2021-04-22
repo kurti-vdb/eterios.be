@@ -1,5 +1,5 @@
 const config = require('../config/database.js');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const pool = mysql.createPool(config.mysql);
 
 exports.insertTomb = function(tomb, callback) {
