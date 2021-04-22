@@ -36,6 +36,7 @@
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "multer-s3-transform": "^2.10.3",
+    "mysql": "^2.18.1",
     "ngx-logger": "^4.2.1",
     "ngx-translate-cache": "^9.0.2",
     "rand-token": "^1.0.1",

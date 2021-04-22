@@ -13,8 +13,8 @@ const authRouter  = require("./backend/routes/user");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json({limit: '5mb'}));
-app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan(":date :remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms"));
 
 app.use('/api/auth/', authRouter);

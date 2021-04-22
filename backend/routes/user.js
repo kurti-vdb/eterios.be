@@ -12,6 +12,12 @@ const uploadlocal = require('../utils/upload-local');
 const exifr = require('exifr');
 const fs = require('fs');
 
+const tombDao = require("../dal/tomb");
+const Tomb = require("../models/mysql/tomb");
+
+const photoDao = require("../dal/photo");
+const Photo = require("../models/mysql/photo");
+
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -77,6 +83,32 @@ router.post('/upload', checkAuth.oAuth, uploadspaces.single('file'), (req, res) 
   }
 
   res.status(200).send({ success: true, message: "Upload successful: " + req.file.originalname });
+});
+
+router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
+
+  let tomb = new Tomb();
+  tomb.lat = req.body.exif.latitude;
+  tomb.lng = req.body.exif.longitude;
+
+  tombDao.insertTomb(tomb, (err, result) => {
+    if (err) {
+        logger.error(err);
+        return res.status(500).send({ success: false, message: "Error 50001" });
+    }
+    else {
+      let photo = new Photo(result.insertId, req.body.filename, req.userID);
+      photoDao.insertPhoto(photo,(err, response) => {
+        if (err) {
+          logger.error(err);
+          //return res.status(500).send({ success: false, message: "Error 50002" });
+        }
+        logger.info(response);
+      })
+    }
+  })
+
+  res.status(200).send({ success: true, message: "UploadExif successful."});
 });
 
 

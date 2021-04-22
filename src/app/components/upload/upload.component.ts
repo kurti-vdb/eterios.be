@@ -21,6 +21,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   fileInfos?: Observable<any[]>;
   selectedFilesSubscription!: Subscription;
+  uploadExifSubscription!: Subscription;
 
   constructor(private uploadService: UploadService, private logger: NGXLogger) { }
 
@@ -54,14 +55,24 @@ export class UploadComponent implements OnInit, OnDestroy {
   upload(idx: number, file: File): void {
     this.progressInfos[idx] = { value: 0, fileName: file.name };
     if (file) {
-      this.uploadService.upload(file).subscribe((event: any) => {
+
+      exifr.parse(file)
+      .then( exif => {
+        this.logger.info("Exif resultaat" + JSON.stringify(exif));
+
+        this.uploadService.upload(file, exif).subscribe((event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
             this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
           }
           else if (event instanceof HttpResponse) {
-            this.getExif(file);
             this.logger.info(JSON.stringify(event));
             this.message.push(event.body.message);
+
+            const upload = { exif: exif, filename: file.name } ;
+            this.uploadService.uploadExif(upload).subscribe(response => {
+              console.log(response);
+            });
+
             this.fileInfos = this.uploadService.getFiles();
           }
         },
@@ -71,6 +82,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.message.push(msg);
           this.fileInfos = this.uploadService.getFiles();
         });
+
+      })
     }
   }
 
@@ -82,9 +95,11 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   getExif(file: any) {
-    exifr.parse(file).then( result => {
-      console.log(result);
-    })
+    exifr.parse(file)
+      .then( result => {
+        this.logger.info("Exif resultaat" + JSON.stringify(result));
+        return result;
+      })
   }
 
 

@@ -28,11 +28,25 @@ export class UploadService {
     private logger: NGXLogger
   ) { }
 
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File, exif: any): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
+    formData.append('exif', exif);
     const req = new HttpRequest('POST', `${environment.apiUrl}/api/auth/upload`, formData, { reportProgress: true, responseType: 'json' });
     return  this.http.request(req);
+  }
+
+  uploadExif(uploadData: any) {
+    return this.http.post<any>(environment.apiUrl + '/api/auth/uploadexif', uploadData)
+    .pipe(
+      catchError (err => {
+        console.log(err);
+        return throwError(err);
+      }),
+      tap(response => {
+        console.log("Upload Exif service response" + response);
+      })
+    )
   }
 
   getFiles(): Observable<any> {
