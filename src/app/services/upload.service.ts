@@ -62,6 +62,19 @@ export class UploadService {
       )
   }
 
+  getTombs(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/auth/tombs`)
+      .pipe(
+        tap(response => {
+          this.logger.info(response);
+        }),
+        catchError (err => {
+          this.logger.error(err);
+          return throwError(err);
+        })
+      )
+  }
+
   getSelectedFiles() {
     return this.http.get<any>(environment.apiUrl + '/api/concession/selectedfiles')
       .pipe(

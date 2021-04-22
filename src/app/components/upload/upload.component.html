@@ -31,7 +31,14 @@
   <button [disabled]="!selectedFiles" (click)="uploadFiles()" class="upload-btn">Upload</button>
 </div>
 
-
+<div class="card mt-3">
+  <div class="">List of tombs</div>
+  <ul class="list-group list-group-flush" >
+    <li class="list-group-item" *ngFor="let tomb of tombs | async">
+      <a href="{{ tomb.ID }}">{{ tomb.lat }}, {{ tomb.lng }}</a>
+    </li>
+  </ul>
+</div>
 
 <!--
 <div class="row">

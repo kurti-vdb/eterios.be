@@ -19,6 +19,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   googleMarkers: any[] = [];
   files: any[] = [];
 
+  tombs?: Observable<any[]>;
   fileInfos?: Observable<any[]>;
   selectedFilesSubscription!: Subscription;
   uploadExifSubscription!: Subscription;
@@ -27,6 +28,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles();
+    this.tombs = this.uploadService.getTombs();
   }
 
   selectFiles(event: any): void {
@@ -74,6 +76,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             });
 
             this.fileInfos = this.uploadService.getFiles();
+            this.tombs = this.uploadService.getTombs();
           }
         },
         (err: any) => {
@@ -86,9 +89,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       })
     }
   }
-
-
-
 
   ngOnDestroy(): void {
     this.selectedFilesSubscription.unsubscribe();

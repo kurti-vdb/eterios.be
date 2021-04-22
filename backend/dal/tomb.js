@@ -46,7 +46,7 @@ exports.gettombByID = function(mysqlID) {
     });
 };
 
-exports.getAllTombs = function() {
+exports.getAllTombs = function(callback) {
 
     let sql = "SELECT * FROM tomb";
 
@@ -56,14 +56,15 @@ exports.getAllTombs = function() {
             callback(true);
             return;
         }
-        connection.query(sql, [mysqlID], function(err, result) {
+        connection.query(sql, function(err, result) {
             connection.release();
             if(err) {
                 console.log(err);
                 callback(true);
                 return;
             }
-            return result;
+            console.log(result)
+            callback(result);
         });
     });
 };
