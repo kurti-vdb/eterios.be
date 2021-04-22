@@ -45,8 +45,8 @@ router.get("/files", checkAuth.oAuth, function (req, res) {
 });
 
 router.get("/tombs", function (req, res) {
-  tombDao.getAllTombs((result) => {
-    res.status(200).json({ status: 'Success', tombs: result });
+  tombDao.getAllTombs((tombs) => {
+    res.status(200).send(tombs);
   });
 
 });
