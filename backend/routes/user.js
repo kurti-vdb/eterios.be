@@ -100,8 +100,8 @@ router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
 
   tombDao.insertTomb(tomb, (err, result) => {
     if (err) {
-        logger.error(err);
-        res.status(500).send({ success: false, message: "Error 50001" });
+      logger.error(err);
+      res.status(500).send({ success: false, message: "Error 50001" });
     }
     else {
       let photo = new Photo(result.insertId, req.body.filename, req.userID);

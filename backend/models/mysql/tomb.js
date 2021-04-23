@@ -3,7 +3,7 @@ class Tomb {
   {
       this.lat;
       this.lng;
-      this.created;
+      this.created = new Date();
   }
 }
 

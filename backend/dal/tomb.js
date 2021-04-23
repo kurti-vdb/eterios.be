@@ -1,6 +1,7 @@
 const config = require('../config/database.js');
 const mysql = require('mysql2');
 const pool = mysql.createPool(config.mysql);
+const logger = require("../utils/logger");
 
 exports.insertTomb = function(tomb, callback) {
     console.log(tomb);
@@ -8,16 +9,16 @@ exports.insertTomb = function(tomb, callback) {
 
     pool.getConnection(function(err, connection) {
         if(err) {
-            console.log(err);
-            callback(true);
-            return;
+          logger.error(err);
+          callback(true);
+          return;
         }
         connection.query(sql, tomb, function(err, result) {
             connection.release();
             if(err) {
-                console.log(err);
-                callback(true);
-                return;
+              logger.error(err);
+              callback(true);
+              return;
             }
             callback(false, result);
         });
@@ -30,18 +31,18 @@ exports.gettombByID = function(mysqlID) {
 
     pool.getConnection(function(err, connection) {
         if(err) {
-            console.log(err);
-            callback(true);
-            return;
+          logger.error(err);
+          callback(true);
+          return;
         }
         connection.query(sql, [mysqlID], function(err, result) {
-            connection.release();
-            if(err) {
-                console.log(err);
-                callback(true);
-                return;
-            }
-            return result;
+          connection.release();
+          if(err) {
+            logger.error(err);
+            callback(true);
+            return;
+          }
+          return result;
         });
     });
 };
@@ -52,19 +53,19 @@ exports.getAllTombs = function(callback) {
 
     pool.getConnection(function(err, connection) {
         if(err) {
-            console.log(err);
-            callback(true);
-            return;
+          logger.error(err);
+          callback(true);
+          return;
         }
         connection.query(sql, function(err, result) {
-            connection.release();
-            if(err) {
-                console.log(err);
-                callback(true);
-                return;
-            }
-            console.log(result)
-            callback(result);
+          connection.release();
+          if(err) {
+            logger.error(err);
+            callback(true);
+            return;
+          }
+          logger.info(result);
+          callback(result);
         });
     });
 };
