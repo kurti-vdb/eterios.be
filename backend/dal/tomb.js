@@ -48,7 +48,7 @@ exports.gettombByID = function(mysqlID) {
 
 exports.getAllTombs = function(callback) {
 
-    let sql = "SELECT * FROM tomb";
+    let sql = "SELECT * FROM eterios.tomb a JOIN photo b ON a.ID = b.tombID";
 
     pool.getConnection(function(err, connection) {
         if(err) {

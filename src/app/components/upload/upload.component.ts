@@ -29,7 +29,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles();
     this.tombs = this.uploadService.getTombs();
-    console.log(this.tombs)
   }
 
   selectFiles(event: any): void {

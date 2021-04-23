@@ -31,11 +31,12 @@
   <button [disabled]="!selectedFiles" (click)="uploadFiles()" class="upload-btn">Upload</button>
 </div>
 
-<div class="card mt-3">
-  <div class="">List of tombs</div>
-  <ul class="list-group list-group-flush" >
+<br>
+<div class="card">
+  <div class="">List of uploads</div>
+  <ul class="list-group" >
     <li class="list-group-item" *ngFor="let tomb of tombs | async">
-      <a href="{{ tomb.ID }}">{{ tomb.lat }}, {{ tomb.lng }}</a>
+      {{ tomb.filename }} | created: {{ tomb.created }} | uploader: {{ tomb.uploaderID }}
     </li>
   </ul>
 </div>
