@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const pool = mysql.createPool(config.mysql);
 
 exports.insertTomb = function(tomb, callback) {
-
+    console.log(tomb);
     let sql = "INSERT INTO tomb SET ?";
 
     pool.getConnection(function(err, connection) {
