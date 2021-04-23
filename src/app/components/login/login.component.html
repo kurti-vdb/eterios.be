@@ -9,7 +9,7 @@
   </div>
 
   <div class="contact-form">
-      <form [formGroup]="loginForm"  (ngSubmit)="login()">
+    <form [formGroup]="loginForm"  (ngSubmit)="login()">
           <div class="input-group">
               <div class="control" [ngClass]="username?.value.length === 0 ? '' : 'filled'">
                   <input type="text" autocomplete="off" name="x" formControlName="username">
@@ -24,7 +24,7 @@
               </div>
 
           </div>
-      </form>
+    </form>
+    <div class="build-version">v{{buildVersion}}</div>
   </div>
-
 </div>
