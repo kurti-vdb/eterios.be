@@ -110,12 +110,13 @@ router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
           logger.error(err);
           res.status(500).send({ success: false, message: "Error 50002" });
         }
-        logger.info(response);
+        else {
+          logger.info(response);
+          res.status(200).send({ success: true, message: "UploadExif successful"});
+        }
       })
     }
   })
-
-  res.status(200).send({ success: true, message: "UploadExif successful."});
 });
 
 
