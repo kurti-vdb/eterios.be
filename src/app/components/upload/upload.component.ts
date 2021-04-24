@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   googleMarkers: any[] = [];
   files: any[] = [];
 
-  tombs?: Observable<any[]>;
+  photos?: Observable<any[]>;
   fileInfos?: Observable<any[]>;
   selectedFilesSubscription!: Subscription;
   uploadExifSubscription!: Subscription;
@@ -28,7 +28,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles();
-    this.tombs = this.uploadService.getTombs();
+    this.photos = this.uploadService.getPhotos();
   }
 
   selectFiles(event: any): void {
@@ -59,47 +59,38 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (file) {
 
       exifr.parse(file)
-      .then( exif => {
-        this.logger.info("Exif resultaat" + JSON.stringify(exif));
+        .then( exif => {
 
-        this.uploadService.upload(file, exif).subscribe((event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
-          }
-          else if (event instanceof HttpResponse) {
-            this.logger.info(JSON.stringify(event));
-            this.message.push(event.body.message);
+          this.uploadService.upload(file, exif).subscribe((event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+            }
+            else if (event instanceof HttpResponse) {
 
-            const upload = { exif: exif, filename: file.name } ;
-            this.uploadService.uploadExif(upload).subscribe(response => {
-              console.log(response);
-            });
+              this.message.push(event.body.message);
+              const upload = { exif: exif, filename: file.name } ;
+              this.uploadService.uploadExif(upload).subscribe(response => {
+                this.fileInfos = this.uploadService.getFiles();
+                this.photos = this.uploadService.getPhotos();
+              });
 
+              this.fileInfos = this.uploadService.getFiles();
+              this.photos = this.uploadService.getPhotos();
+
+            }
+          },(err) => {
+            this.progressInfos[idx].value = 0;
+            const msg = 'Could not upload the file: ' + file.name;
+            this.message.push(msg);
             this.fileInfos = this.uploadService.getFiles();
-            this.tombs = this.uploadService.getTombs();
-          }
-        },
-        (err: any) => {
-          this.progressInfos[idx].value = 0;
-          const msg = 'Could not upload the file: ' + file.name;
-          this.message.push(msg);
-          this.fileInfos = this.uploadService.getFiles();
-        });
+          });
 
-      })
+        })
     }
   }
 
   ngOnDestroy(): void {
     this.selectedFilesSubscription.unsubscribe();
-  }
-
-  getExif(file: any) {
-    exifr.parse(file)
-      .then( result => {
-        this.logger.info("Exif resultaat" + JSON.stringify(result));
-        return result;
-      })
   }
 
 

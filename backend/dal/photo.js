@@ -1,6 +1,7 @@
 const config = require('../config/database.js');
 const mysql = require('mysql');
 const pool = mysql.createPool(config.mysql);
+const logger = require("../utils/logger");
 
 exports.insertPhoto = function(photo, callback) {
 
@@ -46,24 +47,26 @@ exports.getPhotoByID = function(mysqlID) {
     });
 };
 
-exports.getAllPhotos = function() {
 
-    let sql = "SELECT * FROM photo";
+exports.getAllPhotosbyOrganisation = function(organisation, callback) {
 
-    pool.getConnection(function(err, connection) {
+  let sql = "SELECT * FROM photo WHERE `organisationID` = ?";
+
+  pool.getConnection(function(err, connection) {
+      if(err) {
+        logger.error(err);
+        callback(true);
+        return;
+      }
+      connection.query(sql, [organisation], function(err, result) {
+        connection.release();
         if(err) {
-            console.log(err);
-            callback(true);
-            return;
+          logger.error(err);
+          callback(true);
+          return;
         }
-        connection.query(sql, [mysqlID], function(err, result) {
-            connection.release();
-            if(err) {
-                console.log(err);
-                callback(true);
-                return;
-            }
-            return result;
-        });
-    });
+        logger.info(result);
+        callback(result);
+      });
+  });
 };

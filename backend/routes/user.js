@@ -12,11 +12,9 @@ const uploadlocal = require('../utils/upload-local');
 const exifr = require('exifr');
 const fs = require('fs');
 
-const tombDao = require("../dal/tomb");
-const Tomb = require("../models/mysql/tomb");
-
 const photoDao = require("../dal/photo");
 const Photo = require("../models/mysql/photo");
+
 
 const router = express.Router();
 
@@ -44,11 +42,11 @@ router.get("/files", checkAuth.oAuth, function (req, res) {
     })
 });
 
-router.get("/tombs", function (req, res) {
-  tombDao.getAllTombs((tombs) => {
-    res.status(200).send(tombs);
+router.get("/photos", checkAuth.oAuth, function (req, res) {
+  photoDao.getAllPhotosbyOrganisation(req.organisation, (photos) => {
+    console.log(photos);
+    res.status(200).send(photos);
   });
-
 });
 
 router.post("/login", (req, res, next) => {
@@ -67,14 +65,14 @@ router.post("/login", (req, res, next) => {
       if(!result) {
         return res.status(401).json({ message: "Authentication failed." });
       }
-      const token = jwt.sign({ city: fetchedUser.username, id: fetchedUser._id }, process.env.JWT_SECRET, { expiresIn: "48h" });
+      console.log("fetcheduser" + JSON.stringify(fetchedUser));
+      const token = jwt.sign({ organisation: fetchedUser.organisation, id: fetchedUser._id }, process.env.JWT_SECRET, { expiresIn: "48h" });
 
       res.status(200).json({
         token: token,
         expiresIn: 3600 * 48,
         user: generateAngularUser(fetchedUser)
       });
-
     })
     .catch(err => {
       logger.error(err);
@@ -94,29 +92,19 @@ router.post('/upload', checkAuth.oAuth, uploadspaces.single('file'), (req, res) 
 
 router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
 
-  let tomb = new Tomb();
-  tomb.lat = req.body.exif.latitude;
-  tomb.lng = req.body.exif.longitude;
-
-  tombDao.insertTomb(tomb, (err, result) => {
+  let filename = req.body.filename;
+  let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation);
+  photoDao.insertPhoto(photo,(err, response) => {
     if (err) {
       logger.error(err);
-      res.status(500).send({ success: false, message: "Error 50001" });
+      res.status(500).send({ success: false, message: err });
     }
     else {
-      let photo = new Photo(result.insertId, req.body.filename, req.userID);
-      photoDao.insertPhoto(photo,(err, response) => {
-        if (err) {
-          logger.error(err);
-          res.status(500).send({ success: false, message: "Error 50002" });
-        }
-        else {
-          logger.info(response);
-          res.status(200).send({ success: true, message: "UploadExif successful"});
-        }
-      })
+      logger.info(response);
+      res.status(200).send({ success: true, message: "UploadExif successful"});
     }
   })
+
 });
 
 
@@ -149,7 +137,6 @@ router.post("/create", (req, res, next) => {
     })
 });
 
-
 function generateAngularUser(fetchedUser) {
   return {
     id: fetchedUser._id,
@@ -157,6 +144,16 @@ function generateAngularUser(fetchedUser) {
     language: fetchedUser.language,
     organisation: fetchedUser.organisation
   }
+}
+
+function generateDate(filename) {
+  // cut off extension
+
+  //take last 18 chars
+
+  // split _
+
+  // generate date
 }
 
 module.exports = router;

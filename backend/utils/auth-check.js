@@ -15,7 +15,7 @@ module.exports = {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, JWT_SECRET, function(err, decodedToken) {
           req.userID = decodedToken.id;
-          req.city = decodedToken.city;
+          req.organisation = decodedToken.organisation;
         });
         next();
       }

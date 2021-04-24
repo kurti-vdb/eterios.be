@@ -10,8 +10,7 @@ var userSchema = mongoose.Schema({
   username : String,
   password : String,
   language : { type: String, default: "nl" },
-  organisationID: String,
-  organisationName: String
+  organisation: String
 },
 {
   timestamps: {

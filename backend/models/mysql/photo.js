@@ -1,9 +1,11 @@
 class Photo {
-  constructor(tombID, filename, uploaderID)
+  constructor(filename, lat, lng, uploaderID, organisationID)
   {
     this.filename = filename;
-    this.tombID = tombID;
+    this.lat = lat;
+    this.lng = lng;
     this.uploaderID = uploaderID;
+    this.organisationID = organisationID;
   }
 }
 

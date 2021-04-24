@@ -35,7 +35,7 @@
 <div class="card">
   <div class="">List of uploads</div>
   <ul class="list-group" >
-    <li class="list-group-item" *ngFor="let tomb of tombs | async">
+    <li class="list-group-item" *ngFor="let tomb of photos | async">
       {{ tomb.filename }} | created: {{ tomb.created }} | uploader: {{ tomb.uploaderID }}
     </li>
   </ul>

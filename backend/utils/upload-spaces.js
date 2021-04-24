@@ -48,7 +48,7 @@ const uploadspacesorg = multer({
           //let filename = raw.toString("hex") + Date.now() + ".jpg"; //+ mime.getExtension(file.mimetype);
           //req.filenameSpaces = filename;
           //cb(null, req.city + "/" + filename);
-          cb(null, req.city + "/" + file.originalname);
+          cb(null, req.organisation + "/" + file.originalname);
         });
       },
   })
@@ -69,14 +69,14 @@ const uploadspaces = multer({
       transforms: [{
         id: 'original',
         key: function (req, file, cb) {
-          cb(null, req.city + "/original/" + file.originalname)
+          cb(null, req.organisation + "/original/" + file.originalname)
         },
         transform: function (req, file, cb) {
           cb(null, sharp().withMetadata({
             exif: {
               IFD0: {
                 Copyright: 'Eterios.be',
-                City: req.city
+                Organisation: req.organisation
               }
             }
           }).jpeg())
@@ -84,14 +84,14 @@ const uploadspaces = multer({
       }, {
         id: 'thumbnail-250',
         key: function (req, file, cb) {
-          cb(null, req.city + "/thumbnail-250/" + file.originalname)
+          cb(null, req.organisation + "/thumbnail-250/" + file.originalname)
         },
         transform: function (req, file, cb) {
           cb(null, sharp().resize(250).withMetadata({
             exif: {
               IFD0: {
                 Copyright: 'Eterios.be',
-                City: req.city
+                Organisation: req.organisation
               }
             }
           }).jpeg())
@@ -99,14 +99,14 @@ const uploadspaces = multer({
       },{
         id: 'thumbnail-750',
         key: function (req, file, cb) {
-          cb(null, req.city + "/750/" + file.originalname)
+          cb(null, req.organisation + "/750/" + file.originalname)
         },
         transform: function (req, file, cb) {
           cb(null, sharp().resize(750).withMetadata({
             exif: {
               IFD0: {
                 Copyright: 'Eterios.be',
-                City: req.city
+                Organisation: req.organisation
               }
             }
           }).jpeg())
