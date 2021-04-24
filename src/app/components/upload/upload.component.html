@@ -1,34 +1,27 @@
 <div class="button-wrapper">
+  <!--
   <label for="upload-photo">+ Selecteer files</label>
   <input type="file" multiple (change)="selectFiles($event)" id="upload-images" />
-
-  <!-- <div class="file-list" *ngFor="let file of files">
-      <div class="files">
-        <span>{{ file.name }}</span>
-        <span>{{ file.size }}</span>
-      </div>
-      <div class="progress" style="height: 3px;">
-        <div class="progress-bar" role="progressbar" [ngStyle]="{ width: file.value + '%' }" attr.aria-valuenow="{{ file.value }}" aria-valuemin="0" aria-valuemax="100"></div>
-      </div>
-  </div> -->
-
-
+  -->
   <div class="file-list" *ngFor="let file of progressInfos">
-        <div class="files">
-          <span>{{ file.fileName }}</span>
-          <span>{{ file.size }}</span>
-        </div>
-        <div class="progress" style="height: 3px;">
-          <div class="progress-bar" role="progressbar" [ngStyle]="{ width: file.value + '%' }" attr.aria-valuenow="{{ file.value }}" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
+    <div class="files">
+      <span>{{ file.fileName }}</span>
+      <span>{{ file.size }}</span>
     </div>
+    <div class="progress" style="height: 3px;">
+      <div class="progress-bar" role="progressbar" [ngStyle]="{ width: file.value + '%' }" attr.aria-valuenow="{{ file.value }}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+  </div>
     <div *ngIf="message.length" >
       <div *ngFor="let msg of message; let i = index">
         <div>{{ msg }}</div>
       </div>
     </div>
 
-  <button [disabled]="!selectedFiles" (click)="uploadFiles()" class="upload-btn">Upload</button>
+    <input type="file" multiple (change)="selectFiles($event)" />
+    <button [disabled]="!selectedFiles" (click)="uploadFiles()" class="upload-btn">Upload</button>
+
+
 </div>
 
 <br>

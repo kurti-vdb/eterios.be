@@ -47,6 +47,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   uploadFiles(): void {
+    console.log("select files..")
     this.message = [];
     this.googleMarkers = [];
     if (this.selectedFiles) {

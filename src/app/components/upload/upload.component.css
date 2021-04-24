@@ -31,7 +31,6 @@ button {
   opacity: 0.75;
   background: #ccc;
 }
-
 .grid {
   display: flex;
   flex-direction: column;
