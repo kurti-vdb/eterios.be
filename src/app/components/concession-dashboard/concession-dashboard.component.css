@@ -9,3 +9,7 @@ app-upload {
   margin: 0 auto;
   width: 360px;
 }
+
+body {
+  background-color: #f3f6fd;
+}

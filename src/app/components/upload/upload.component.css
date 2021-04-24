@@ -32,3 +32,48 @@ button {
   background: #ccc;
 }
 
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+.photo-row {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 5px 15px;
+  border-radius: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.photo-row img {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.photo-row {
+  align-items: center; /* Vertical center alignment */
+  justify-content: center; /* Horizontal center alignment */
+  color: #8a8899;
+  font-size: 14px;
+}
+
+
+.photo-row .filename {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.photo-row .created {
+  margin-left: 20px;
+}
+.photo-row .size {
+  margin-left: 20px;
+}
+.photo-row .uploader {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.photo-row div:last-child {
+  margin-left: auto;
+  color: #8a8899;
+}

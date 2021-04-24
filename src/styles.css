@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: "DM Sans", sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: #f3f6fd;
+}

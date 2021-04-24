@@ -21,10 +21,12 @@ h4 {
   background: white;
   z-index: 5;
   margin: 0 auto;
-  width: 400px;
+  width: 360px;
   -webkit-transition: .3s ease;
   transition: .3s ease;
-  border-radius: 5px;
+  border-radius: 25px;
+  padding: 25px;
+
 }
 .input-group {
   position: relative;

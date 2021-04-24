@@ -14,7 +14,7 @@ export class AuthService implements OnInit {
   private isAuthenticated = false;
   private tokenTimer!: NodeJS.Timer;
   private authStatusSubject = new Subject<boolean>();
-  private user!: User;
+  public user!: User;
   private userUpdated = new Subject<User>();
 
   getToken() {

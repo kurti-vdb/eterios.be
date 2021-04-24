@@ -75,6 +75,11 @@ export class UploadService {
       )
   }
 
+
+  getSpacesUrl() {
+    return '';
+  }
+
   getSelectedFiles() {
     return this.http.get<any>(environment.apiUrl + '/api/concession/selectedfiles')
       .pipe(

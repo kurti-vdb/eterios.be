@@ -4,6 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/services/upload.service';
 import exifr from 'exifr';
+import { AuthService } from 'src/app/services/authservice';
 
 
 @Component({
@@ -18,13 +19,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   message: string[] = [];
   googleMarkers: any[] = [];
   files: any[] = [];
+  spacesUrl: string = '';
 
   photos?: Observable<any[]>;
   fileInfos?: Observable<any[]>;
   selectedFilesSubscription!: Subscription;
   uploadExifSubscription!: Subscription;
 
-  constructor(private uploadService: UploadService, private logger: NGXLogger) { }
+  constructor(private uploadService: UploadService, private logger: NGXLogger, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles();
