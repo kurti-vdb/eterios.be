@@ -44,7 +44,6 @@ router.get("/files", checkAuth.oAuth, function (req, res) {
 
 router.get("/photos", checkAuth.oAuth, function (req, res) {
   photoDao.getAllPhotosbyOrganisation(req.organisation, (photos) => {
-    console.log(photos);
     res.status(200).send(photos);
   });
 });

@@ -16,6 +16,7 @@ import { CreateComponent } from './components/create/create.component';
 import { MapComponent } from './components/map/map.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ConcessionDashboardComponent } from './components/concession-dashboard/concession-dashboard.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ConcessionDashboardComponent } from './components/concession-dashboard/
     UploadComponent,
     CreateComponent,
     MapComponent,
-    ConcessionDashboardComponent
+    ConcessionDashboardComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

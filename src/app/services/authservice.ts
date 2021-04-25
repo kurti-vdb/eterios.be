@@ -42,7 +42,7 @@ export class AuthService implements OnInit {
           return throwError(err);
         }),
         tap(response => {
-          this.logger.info(response);
+          //this.logger.info(response);
           this.processLoginResponse(response);
       }));
   }

@@ -50,7 +50,7 @@ exports.getPhotoByID = function(mysqlID) {
 
 exports.getAllPhotosbyOrganisation = function(organisation, callback) {
 
-  let sql = "SELECT * FROM photo WHERE `organisationID` = ?";
+  let sql = "SELECT * FROM photo JOIN user ON photo.uploaderID = user.mongoID WHERE photo.organisationID = ?";
 
   pool.getConnection(function(err, connection) {
       if(err) {
