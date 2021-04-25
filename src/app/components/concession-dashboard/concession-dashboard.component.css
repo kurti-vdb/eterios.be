@@ -1,15 +1,14 @@
-.wrapper {
-  margin: 50px auto ;
+.app-container {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f3f6fd;;
+  transition: 0.2s;
+  max-width: 1800px;
 }
 
 app-upload {
   margin: 0 auto;
   width: 360px;
-}
-
-body {
-  background-color: #f3f6fd;
 }

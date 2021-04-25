@@ -1,3 +1,5 @@
+
+
 <div class="button-wrapper">
   <!--
   <label for="upload-photo">+ Selecteer files</label>
@@ -20,28 +22,22 @@
 
     <input type="file" multiple (change)="selectFiles($event)" />
     <button [disabled]="!selectedFiles" (click)="uploadFiles()" class="upload-btn">Upload</button>
-
-
 </div>
 
 <br>
 <div class="">
   <div class="">List of uploads</div>
   <div class="grid">
-    <div class="photo-row">
-      <div><img src="https://i.stack.imgur.com/YkuCP.png" width="40" height="40"/></div>
-      <div class="filename">Dummy row</div>
-      <div class="created">24 april 2021</div>
-      <div class="size">3.2MB</div>
-      <div class="uploader">Kurti</div>
-      <div><i class="fas fa-ellipsis-h"></i></div>
-    </div>
     <div class="photo-row" *ngFor="let photo of photos | async">
-      <div><img src="" width="40" height="40" alt="Image needed?"/></div>
+      <div>
+        <a (click)="goToLink(photo.organisationID, photo.filename)">
+          <img src="https://eterios.ams3.digitaloceanspaces.com/{{ photo.organisationID }}/thumbnail-250/{{ photo.filename }}" width="40" height="40" alt="{{ photo.filename }}"/>
+        </a>
+      </div>
       <div class="filename">{{ photo.filename }}</div>
-      <div class="created">24 april 2021</div>
-      <div class="size">3.2MB</div>
-      <div class="uploader">{{ photo.uploaderID}}</div>
+      <div class="created">{{ photo.uploaded | date:"dd-MM-yyyy HH:mm" }}</div>
+      <div class="size">--</div>
+      <div class="uploader">{{ photo.name }}</div>
       <div><i class="fas fa-ellipsis-h"></i></div>
     </div>
 

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/authservice';
 
 @Component({
-  selector: 'app-concession-dashboard',
-  templateUrl: './concession-dashboard.component.html',
-  styleUrls: ['./concession-dashboard.component.css']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.css']
 })
-export class ConcessionDashboardComponent implements OnInit {
+export class NavigationComponent implements OnInit {
 
   public organisation?: string;
   public user?: string;

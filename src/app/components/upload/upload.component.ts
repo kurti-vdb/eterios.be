@@ -63,7 +63,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
       exifr.parse(file)
         .then( exif => {
-
+          console.log(exif);
           this.uploadService.upload(file, exif).subscribe((event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
@@ -90,6 +90,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
         })
     }
+  }
+
+  goToLink(organisation: string, filename: string){
+    window.open("https://eterios.ams3.digitaloceanspaces.com/" + organisation + "/750/" + filename, "_blank");
   }
 
   ngOnDestroy(): void {
