@@ -12,8 +12,15 @@ export class UploadService {
 
   selectedFiles!: FileList;
   private googleMarkers: any[] = [];
+  private photos: any[] = [];
   private selectedFilesSubject = new Subject<FileList>();
   private googleMarkersSubject = new Subject<any[]>();
+  private photosSubject = new Subject<any[]>();
+
+  public photoEmitter = new Subject<any>();
+  public getPhotoEmitter() {
+    return this.photoEmitter.asObservable();
+  }
 
   getSelectedFilesSubject() {
     return this.selectedFilesSubject.asObservable();
@@ -21,6 +28,10 @@ export class UploadService {
 
   getGoogleMarkersSubject() {
     return this.googleMarkersSubject.asObservable();
+  }
+
+  getPhotosSubject() {
+    return this.photosSubject.asObservable();
   }
 
   constructor(
@@ -39,13 +50,13 @@ export class UploadService {
   uploadExif(uploadData: any) {
     return this.http.post<any>(environment.apiUrl + '/api/auth/uploadexif', uploadData)
     .pipe(
+      tap(response => {
+        this.logger.info("Upload Exif service response" + response);
+      }),
       catchError (err => {
         this.logger.error(err);
         return throwError(err);
       }),
-      tap(response => {
-        this.logger.info("Upload Exif service response" + response);
-      })
     )
   }
 
@@ -63,10 +74,25 @@ export class UploadService {
   }
 
   getPhotos(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/auth/photos`)
+    return this.http.get<any>(`${environment.apiUrl}/api/auth/photos`)
       .pipe(
         tap(response => {
-          this.logger.info(response);
+          this.photos= response;
+          this.photosSubject.next([...this.photos]);
+        }),
+        catchError (err => {
+          this.logger.error(err);
+          return throwError(err);
+        })
+      )
+  }
+
+  getAllPhotos() {
+    return this.http.get<any>(`${environment.apiUrl}/api/auth/photos`)
+      .pipe(
+        tap(response => {
+          this.photos= response;
+          this.photosSubject.next([...this.photos]);
         }),
         catchError (err => {
           this.logger.error(err);

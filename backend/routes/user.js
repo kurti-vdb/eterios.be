@@ -91,7 +91,6 @@ router.post('/upload', checkAuth.oAuth, uploadspaces.single('file'), (req, res) 
 
 router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
 
-  let filename = req.body.filename;
   let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation);
   photoDao.insertPhoto(photo,(err, response) => {
     if (err) {

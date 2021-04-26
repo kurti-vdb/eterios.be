@@ -17,6 +17,9 @@ import { MapComponent } from './components/map/map.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ConcessionDashboardComponent } from './components/concession-dashboard/concession-dashboard.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { GridComponent } from './components/grid/grid.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { GridHeaderComponent } from './components/grid-header/grid-header.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     CreateComponent,
     MapComponent,
     ConcessionDashboardComponent,
-    NavigationComponent
+    NavigationComponent,
+    GridComponent,
+    SidebarComponent,
+    GridHeaderComponent
   ],
   imports: [
     BrowserModule,
