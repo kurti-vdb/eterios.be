@@ -5,9 +5,9 @@ import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/services/upload.service';
 import exifr from 'exifr';
 import { AuthService } from 'src/app/services/authservice';
-
-
+import { GridComponent } from '../grid/grid.component';
 @Component({
+  providers:[GridComponent],
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
@@ -26,7 +26,12 @@ export class UploadComponent implements OnInit, OnDestroy {
   selectedFilesSubscription!: Subscription;
   uploadExifSubscription!: Subscription;
 
-  constructor(private uploadService: UploadService, private logger: NGXLogger, public authService: AuthService) { }
+  constructor(
+    private uploadService: UploadService,
+    private logger: NGXLogger,
+    public authService: AuthService,
+    private gridComponent: GridComponent
+  ) { }
 
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles();
@@ -60,7 +65,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   upload(idx: number, file: File): void {
     this.progressInfos[idx] = { value: 0, fileName: file.name };
     if (file) {
-
       exifr.parse(file)
         .then( exif => {
           console.log(exif);
@@ -69,12 +73,12 @@ export class UploadComponent implements OnInit, OnDestroy {
               this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
             }
             else if (event instanceof HttpResponse) {
-
               this.message.push(event.body.message);
               const upload = { exif: exif, filename: file.name } ;
               this.uploadService.uploadExif(upload).subscribe(response => {
                 this.fileInfos = this.uploadService.getFiles();
                 this.photos = this.uploadService.getPhotos();
+                this.gridComponent.getPhotos();
               });
 
               this.fileInfos = this.uploadService.getFiles();
@@ -92,8 +96,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToLink(organisation: string, filename: string){
-    window.open("https://eterios.ams3.digitaloceanspaces.com/" + organisation + "/750/" + filename, "_blank");
+  downloadImage(organisation: string, filename: string){
+    window.open("https://eterios.ams3.digitaloceanspaces.com/" + organisation + "/750/" + filename);
   }
 
   ngOnDestroy(): void {

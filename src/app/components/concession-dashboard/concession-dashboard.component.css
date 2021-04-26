@@ -8,7 +8,12 @@
   max-width: 1800px;
 }
 
-app-upload {
-  margin: 0 auto;
-  width: 360px;
+
+
+.messages p {
+  margin: 20px;
+}
+
+.grid {
+  margin: 50px 50px 0 100px;;
 }
