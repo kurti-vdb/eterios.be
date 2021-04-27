@@ -67,6 +67,12 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (file) {
       exifr.parse(file)
         .then( exif => {
+
+          if(!exif?.latitude && !exif?.longitude) {
+            this.message.push("Geen lat en lng exif data beschikbaar, geen record weggeschreven in sql");
+            return;
+          }
+
           console.log(exif);
           this.uploadService.upload(file, exif).subscribe((event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
