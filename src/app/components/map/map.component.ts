@@ -13,31 +13,25 @@ export class MapComponent implements OnInit {
   lng: number = 4.489006697632691;
 
   selectedFiles!: FileList;
-  googleMarkers: any[] = [];
+  @Input() googleMarkers: any[] = [];
   googleMarkersSubscription!: Subscription;
+
+  @Input() photos: any[] = [];
   @Input() fileInfos?: Observable<any[]>;
+
+
+  styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
+
 
   constructor(private uploadService: UploadService) { }
 
   ngOnInit(): void {
-    this.uploadService.getSelectedFilesSubject().subscribe(response => {
-      this.selectedFiles = response;
-      console.log(response);
-    });
-
-    this.uploadService.getGoogleMarkersSubject().subscribe(response => {
-      this.googleMarkers = response;
-      console.log("markers response: " + JSON.stringify(response));
-    })
-  }
-
-
-  getGoogleMarkers = () => {
 
   }
+
 
   ngOnDestroy(): void {
-    this.googleMarkersSubscription.unsubscribe();
+
   }
 
 }

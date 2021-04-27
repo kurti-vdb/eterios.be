@@ -10,18 +10,12 @@ import { UploadService } from 'src/app/services/upload.service';
 })
 export class GridComponent implements OnInit {
 
-  photos?: Observable<any[]>;
+  @Input() photos?: Observable<any[]>;
 
   constructor(private authService: AuthService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
-    this.photos = this.uploadService.getPhotos();
-  }
 
-
-  getPhotos() {
-    this.photos = this.uploadService.getPhotos();
-    console.log("getPhots from other component called");
   }
 
   downloadImage(organisation: string, filename: string){

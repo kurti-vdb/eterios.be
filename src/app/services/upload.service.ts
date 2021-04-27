@@ -51,7 +51,7 @@ export class UploadService {
     return this.http.post<any>(environment.apiUrl + '/api/auth/uploadexif', uploadData)
     .pipe(
       tap(response => {
-        this.logger.info("Upload Exif service response" + response);
+        //this.logger.info("Upload Exif service response" + JSON.stringify(response));
       }),
       catchError (err => {
         this.logger.error(err);
@@ -64,7 +64,7 @@ export class UploadService {
     return this.http.get(`${environment.apiUrl}/api/auth/files`)
       .pipe(
         tap(response => {
-          this.logger.info(response);
+          //this.logger.info(response);
         }),
         catchError (err => {
           this.logger.error(err);
@@ -79,6 +79,19 @@ export class UploadService {
         tap(response => {
           this.photos= response;
           this.photosSubject.next([...this.photos]);
+        }),
+        catchError (err => {
+          this.logger.error(err);
+          return throwError(err);
+        })
+      )
+  }
+
+  getFotos() {
+    return this.http.get<any>(`${environment.apiUrl}/api/auth/photos`)
+      .pipe(
+        tap(response => {
+
         }),
         catchError (err => {
           this.logger.error(err);

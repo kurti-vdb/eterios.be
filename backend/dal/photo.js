@@ -65,7 +65,7 @@ exports.getAllPhotosbyOrganisation = function(organisation, callback) {
           callback(true);
           return;
         }
-        logger.info(result);
+        //logger.info(result);
         callback(result);
       });
   });

@@ -20,6 +20,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { GridComponent } from './components/grid/grid.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { GridHeaderComponent } from './components/grid-header/grid-header.component';
+import { AgmOverlays } from 'agm-overlays';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { GridHeaderComponent } from './components/grid-header/grid-header.compon
     }),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAyhTZbdWCv56vTg_nne2UIPHhQKZb5V6w'
-    })
+    }),
+    AgmOverlays
   ],
   providers: [
     {

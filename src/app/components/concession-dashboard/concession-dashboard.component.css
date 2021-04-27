@@ -8,12 +8,122 @@
   max-width: 1800px;
 }
 
-
+.projects-section {
+  margin-bottom: 25px;
+}
 
 .messages p {
   margin: 20px;
 }
 
 .grid {
-  margin: 50px 50px 0 100px;;
+  margin: 50px 25px 0 25px;;
+}
+
+.button-wrapper {
+  margin: 15px 25px;
+}
+
+
+label, .upload-btn {
+  cursor: pointer;
+  background: #132051;
+  cursor: pointer;
+  color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+#upload-images {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  top: -50px;
+}
+
+.files {
+  display: flex;
+  font-size: 12px;
+}
+
+.files span {
+  margin-right: 20px;
+}
+
+button {
+  border: none;
+}
+
+.upload-btn:disabled {
+  opacity: 0.75;
+  background: #ccc;
+}
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+.photo-row {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 5px 15px;
+  border-radius: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.photo-row img {
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.photo-row {
+  align-items: center; /* Vertical center alignment */
+  justify-content: center; /* Horizontal center alignment */
+  color: #45556f;
+  font-size: 14px;
+}
+
+
+.photo-row .filename {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.photo-row .created {
+  margin-left: 20px;
+}
+.photo-row .size {
+  margin-left: 20px;
+}
+.photo-row .uploader {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.photo-row div:last-child {
+  margin-left: auto;
+  color: #8a8899;
+}
+
+
+
+.upload-file {
+  cursor: pointer;
+  text-align: center;
+  align-self: center;
+  position: relative;
+}
+.upload-file input {
+  opacity: 0;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+h6 {
+  color: #45556f;
+  text-transform: uppercase;
+  font-weight: 700;
 }

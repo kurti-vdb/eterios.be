@@ -1,13 +1,12 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/services/upload.service';
 import exifr from 'exifr';
 import { AuthService } from 'src/app/services/authservice';
-import { GridComponent } from '../grid/grid.component';
+
 @Component({
-  providers:[GridComponent],
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
@@ -19,6 +18,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   message: string[] = [];
   googleMarkers: any[] = [];
   files: any[] = [];
+  fotos: any[] = [];
   spacesUrl: string = '';
 
   photos?: Observable<any[]>;
@@ -26,11 +26,12 @@ export class UploadComponent implements OnInit, OnDestroy {
   selectedFilesSubscription!: Subscription;
   uploadExifSubscription!: Subscription;
 
+  @Output() messageEvent = new EventEmitter<any[]>();
+
   constructor(
     private uploadService: UploadService,
     private logger: NGXLogger,
     public authService: AuthService,
-    private gridComponent: GridComponent
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +53,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   uploadFiles(): void {
-    console.log("select files..")
     this.message = [];
     this.googleMarkers = [];
     if (this.selectedFiles) {
@@ -84,7 +84,9 @@ export class UploadComponent implements OnInit, OnDestroy {
               this.uploadService.uploadExif(upload).subscribe(response => {
                 this.fileInfos = this.uploadService.getFiles();
                 this.photos = this.uploadService.getPhotos();
-                this.gridComponent.getPhotos();
+
+
+                this.messageEvent.emit([...this.fotos]);
               });
 
               this.fileInfos = this.uploadService.getFiles();

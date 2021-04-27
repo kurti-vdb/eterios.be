@@ -64,7 +64,6 @@ router.post("/login", (req, res, next) => {
       if(!result) {
         return res.status(401).json({ message: "Authentication failed." });
       }
-      console.log("fetcheduser" + JSON.stringify(fetchedUser));
       const token = jwt.sign({ organisation: fetchedUser.organisation, id: fetchedUser._id }, process.env.JWT_SECRET, { expiresIn: "48h" });
 
       res.status(200).json({
@@ -98,8 +97,7 @@ router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
       res.status(500).send({ success: false, message: err });
     }
     else {
-      logger.info(response);
-      res.status(200).send({ success: true, message: "UploadExif successful"});
+      res.status(200).send({ success: true, message: "UploadExif successful", photo: photo });
     }
   })
 

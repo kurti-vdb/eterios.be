@@ -1,6 +1,9 @@
-<agm-map [zoom]="17" [latitude]="lat" [longitude]="lng">
+<agm-map [zoom]="16" [latitude]="lat" [longitude]="lng" [styles]="styles">
   <agm-map-type-control></agm-map-type-control>
-  <agm-marker *ngFor="let file of fileInfos | async" [latitude]="file.lat" [longitude]="file.lng" [label]="file.name"></agm-marker>
+  <agm-overlay *ngFor="let file of googleMarkers" [latitude]="file.lat" [longitude]="file.lng" >
+    <div class="bg one"></div>
+    <div class="button one"></div>
+  </agm-overlay>
 </agm-map>
 
 
