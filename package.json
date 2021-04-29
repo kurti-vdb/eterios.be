@@ -1,6 +1,6 @@
 {
   "name": "portal-eterios-be",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -41,6 +41,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "ngx-logger": "^4.2.1",
+    "ngx-pagination": "^5.0.0",
     "ngx-translate-cache": "^9.0.2",
     "rand-token": "^1.0.1",
     "rxjs": "~6.6.0",

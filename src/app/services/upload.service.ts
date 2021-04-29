@@ -60,11 +60,24 @@ export class UploadService {
     )
   }
 
+  deletePhoto(filename: string) {
+    return this.http.delete(environment.apiUrl + '/api/auth/' + filename)
+    .pipe(
+      tap(response => {
+        this.logger.info("Photo deleted");
+      }),
+      catchError (err => {
+        this.logger.error(err);
+        return throwError(err);
+      }),
+    )
+  }
+
   getFiles(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/auth/files`)
       .pipe(
         tap(response => {
-          //this.logger.info(response);
+          this.logger.info(response);
         }),
         catchError (err => {
           this.logger.error(err);

@@ -21,6 +21,7 @@ import { GridComponent } from './components/grid/grid.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { GridHeaderComponent } from './components/grid-header/grid-header.component';
 import { AgmOverlays } from 'agm-overlays';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { AgmOverlays } from 'agm-overlays';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAyhTZbdWCv56vTg_nne2UIPHhQKZb5V6w'
     }),
-    AgmOverlays
+    AgmOverlays,
+    NgxPaginationModule
   ],
   providers: [
     {

@@ -10,7 +10,6 @@ var multerS3Transform = require('multer-s3-transform')
 const sharp = require('sharp');
 
 
-
 const spacesEndpoint = new aws.Endpoint(process.env.DO_SPACES_ENDPOINT);
 const s3 = new aws.S3({
     endpoint: spacesEndpoint,
@@ -114,6 +113,5 @@ const uploadspaces = multer({
       }]
   }),
 });
-
 
 module.exports = uploadspaces;

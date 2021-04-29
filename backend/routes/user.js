@@ -8,7 +8,7 @@ const User = require('../models/user');
 const logger = require("../utils/logger");
 const checkAuth = require('../utils/auth-check');
 const uploadspaces = require('../utils/upload-spaces');
-const uploadlocal = require('../utils/upload-local');
+const removeFromSpaces = require('../utils/remove-spaces');
 const exifr = require('exifr');
 const fs = require('fs');
 
@@ -88,16 +88,31 @@ router.post('/upload', checkAuth.oAuth, uploadspaces.single('file'), (req, res) 
   res.status(200).send({ success: true, message: "Upload successful: " + req.file.originalname });
 });
 
-router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
+router.delete('/:filename', checkAuth.oAuth, removeFromSpaces, (req, res) => {
 
-  let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation);
-  photoDao.insertPhoto(photo,(err, response) => {
+  photoDao.deletePhoto(req.params.filename, (err, response) => {
     if (err) {
       logger.error(err);
       res.status(500).send({ success: false, message: err });
     }
     else {
-      res.status(200).send({ success: true, message: "UploadExif successful", photo: photo });
+      res.status(200).send({ success: true, message: "Photo removed", response: response });
+    }
+  })
+
+});
+
+router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
+
+  let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation);
+
+  photoDao.insertPhoto(photo, (err, response) => {
+    if (err) {
+      logger.error(response);
+      res.status(500).send({ success: false, message: response });
+    }
+    else {
+      res.status(200).send({ success: true, message: "Photo saved in mysql", photo: photo, response: response });
     }
   })
 

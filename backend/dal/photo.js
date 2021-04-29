@@ -17,6 +17,28 @@ exports.insertPhoto = function(photo, callback) {
       connection.release();
       if(err) {
         console.log(err);
+        callback(true, err);
+        return;
+      }
+      callback(false, result);
+    });
+  });
+};
+
+exports.deletePhoto = function(filename, callback) {
+
+  let sql = "DELETE FROM photo WHERE filename = ?";
+
+  pool.getConnection(function(err, connection) {
+    if(err) {
+      console.log(err);
+      callback(true);
+      return;
+    }
+    connection.query(sql, filename, function(err, result) {
+      connection.release();
+      if(err) {
+        console.log(err);
         callback(true);
         return;
       }

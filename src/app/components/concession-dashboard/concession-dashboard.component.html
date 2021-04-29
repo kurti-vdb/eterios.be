@@ -7,7 +7,7 @@
     <div class="projects-section">
 
       <div class="projects-section-header">
-        <p>Google maps component</p>
+        <p>Ziekebeemdenstraat 4, 2800 Mechelen</p>
         <p class="time">--</p>
       </div>
 
@@ -73,19 +73,21 @@
   <div class="grid">
     <app-grid-header></app-grid-header>
 
-      <div class="photo-row" *ngFor="let photo of photos | async">
+      <div class="photo-row" *ngFor="let photo of (photos | async) | paginate: { itemsPerPage: 6, currentPage: page }">
           <div>
             <img src="https://eterios.ams3.digitaloceanspaces.com/{{ photo.organisationID }}/thumbnail-250/{{ photo.filename }}" width="40" height="40" alt="{{ photo.filename }}"/>
           </div>
           <div class="filename">{{ photo.filename }}</div>
           <div class="created">{{ photo.uploaded | date:"dd-MM-yyyy HH:mm" }}</div>
           <div class="size">
-            <i (click)="downloadImage(photo.organisationID, photo.filename)" class="fas fa-download" aria-hidden="true"></i></div>
+            <i (click)="downloadImage(photo.organisationID, photo.filename)" class="fas fa-download" aria-hidden="true"></i>
+          </div>
           <div class="uploader">{{ photo.name }}</div>
+          <div (click)="deletePhoto(photo.filename)"><i class="fas fa-trash"></i></div>
           <div><i class="fas fa-ellipsis-h"></i></div>
       </div>
 
-
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
 
   </div>
 

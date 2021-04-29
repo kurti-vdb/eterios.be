@@ -15,6 +15,7 @@ export class ConcessionDashboardComponent implements OnInit {
 
   public organisation?: string;
   public user?: string;
+  page: number = 1;
 
   photos?: Observable<any[]>;
   fileInfos?: Observable<any[]>;
@@ -75,12 +76,22 @@ export class ConcessionDashboardComponent implements OnInit {
               this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
             }
             else if (event instanceof HttpResponse) {
-              this.message.push(event.body.message);
-              this.uploadService.uploadExif({ exif: exif, filename: file.name }).subscribe(response => {
-                this.googleMarkers = [...this.googleMarkers, response.photo];
-                this.fileInfos = this.uploadService.getFiles();
-                this.photos = this.uploadService.getPhotos();
-              });
+              this.uploadService.uploadExif({ exif: exif, filename: file.name }).subscribe(
+                response => {
+
+                  //if (response.error)
+                    //this.message.push("duplicaat"  + response)
+                  //else
+                    this.message.push(event.body.message);
+
+                  this.googleMarkers = [...this.googleMarkers, response.photo];
+                  this.fileInfos = this.uploadService.getFiles();
+                  this.photos = this.uploadService.getPhotos();
+                },
+                error => {
+                  this.message.push(error.error?.message?.sqlMessage);
+                }
+              );
 
               this.fileInfos = this.uploadService.getFiles();
               this.photos = this.uploadService.getPhotos();
@@ -94,6 +105,12 @@ export class ConcessionDashboardComponent implements OnInit {
 
         })
     }
+  }
+
+  deletePhoto(filename: string) {
+    this.uploadService.deletePhoto(filename).subscribe(response => {
+      this.photos = this.uploadService.getPhotos();
+    })
   }
 
   private formatBytes(bytes: number, decimals = 2) {
