@@ -22,6 +22,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { GridHeaderComponent } from './components/grid-header/grid-header.component';
 import { AgmOverlays } from 'agm-overlays';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { SuccessComponent } from './components/animations/success/success.component';
+import { ErrorComponent } from './components/animations/error/error.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NavigationComponent,
     GridComponent,
     SidebarComponent,
-    GridHeaderComponent
+    GridHeaderComponent,
+    SuccessComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

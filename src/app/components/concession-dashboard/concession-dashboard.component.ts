@@ -17,7 +17,7 @@ export class ConcessionDashboardComponent implements OnInit {
   public user?: string;
   page: number = 1;
 
-  photos?: Observable<any[]>;
+  photos: Observable<any[]> = new Observable();
   fileInfos?: Observable<any[]>;
 
   selectedFiles!: FileList;
@@ -61,13 +61,17 @@ export class ConcessionDashboardComponent implements OnInit {
   }
 
   async upload(idx: number, file: File) {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
+    this.progressInfos[idx] = { success: false, isUploading: true, value: 0, fileName: file.name, message: "" };
+
     if (file) {
       exifr.parse(file)
         .then( exif => {
 
           if(!exif?.latitude && !exif?.longitude) {
-            this.message.push("Geen lat en lng exif data beschikbaar, geen record weggeschreven in sql");
+            this.progressInfos[idx].message = "Geen lat en lng exif data beschikbaar";
+            this.progressInfos[idx].success = false;
+            this.progressInfos[idx].isUploading = false;
+            //this.message.push("Geen lat en lng exif data beschikbaar, geen record weggeschreven in sql");
             return;
           }
 
@@ -79,27 +83,34 @@ export class ConcessionDashboardComponent implements OnInit {
               this.uploadService.uploadExif({ exif: exif, filename: file.name }).subscribe(
                 response => {
 
-                  //if (response.error)
-                    //this.message.push("duplicaat"  + response)
-                  //else
-                    this.message.push(event.body.message);
+                  this.progressInfos[idx].message = event.body.message
+                  //this.message.push(event.body.message);
 
                   this.googleMarkers = [...this.googleMarkers, response.photo];
                   this.fileInfos = this.uploadService.getFiles();
                   this.photos = this.uploadService.getPhotos();
+                  this.progressInfos[idx].success = true;
+                  this.progressInfos[idx].isUploading = false;
                 },
                 error => {
-                  this.message.push(error.error?.message?.sqlMessage);
+                  this.progressInfos[idx].success = false;
+                  this.progressInfos[idx].isUploading = false;
+                  this.progressInfos[idx].message = error.error?.message?.sqlMessage;
+                  //this.message.push(error.error?.message?.sqlMessage);
                 }
               );
 
-              this.fileInfos = this.uploadService.getFiles();
-              this.photos = this.uploadService.getPhotos();
+              //this.fileInfos = this.uploadService.getFiles();
+              //this.photos = this.uploadService.getPhotos();
             }
           },(err) => {
             this.progressInfos[idx].value = 0;
-            const msg = 'Could not upload the file: ' + file.name;
-            this.message.push(msg);
+            this.progressInfos[idx].success = false;
+            console.log("hier?");
+            this.progressInfos[idx].isUploading = false;
+            this.progressInfos[idx].message = "Er ging iets fout bij de upload, probeer opnieuw";
+            //const msg = 'Could not upload the file: ' + file.name;
+            //this.message.push(msg);
             this.fileInfos = this.uploadService.getFiles();
           });
 

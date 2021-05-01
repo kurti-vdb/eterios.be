@@ -1,5 +1,5 @@
 .app-container {
-  width: 100%;
+  min-width: 1196px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -22,6 +22,9 @@
 
 .button-wrapper {
   margin: 15px 25px;
+  padding: 10px;
+  /*overflow-y: scroll;
+  max-height: 400px;*/
 }
 
 
@@ -32,6 +35,8 @@ label, .upload-btn {
   color: #fff;
   padding: 15px;
   border-radius: 15px;
+  margin: 0 auto;
+  display: flex;
 }
 
 #upload-images {
@@ -44,6 +49,8 @@ label, .upload-btn {
 .files {
   display: flex;
   font-size: 12px;
+  position: relative;
+  top: -5px;
 }
 
 .files span {
@@ -112,6 +119,8 @@ button {
   text-align: center;
   align-self: center;
   position: relative;
+  /*border-bottom: 1px solid var(--message-box-border);*/
+  margin-bottom: 35px;
 }
 .upload-file input {
   opacity: 0;
@@ -126,4 +135,38 @@ h6 {
   color: #45556f;
   text-transform: uppercase;
   font-weight: 700;
+}
+
+app-error, app-success {
+  position: relative;
+  top: -7px;
+  left: 12px;
+}
+
+.progress-wrapper {
+  display: flex;
+}
+
+.progress {
+  width: 90%;
+}
+
+.progress-bar {
+  background-color: #46bcec;
+}
+
+.message {
+  display: flex;
+  font-size: 12px;
+  position: relative;
+  top: -5px;
+  width: 90%;
+}
+.file-list {
+  margin-bottom: 15px;
+
+}
+
+.messages-section {
+  width: 374px;
 }

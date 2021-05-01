@@ -1,11 +1,12 @@
 <div class="projects-section-line">
   <div class="projects-status">
     <div class="item-status">
-      <span class="status-number">13</span>
+      <span class="status-number">{{ (photos | async).length }} </span>
       <span class="status-type">Concessies</span>
     </div>
     <div class="item-status">
-      <span class="status-number">24</span>
+
+      <span class="status-number">{{ totalOfPhotos }}</span>
       <span class="status-type">Foto's</span>
     </div>
   </div><div class="search-wrapper">
