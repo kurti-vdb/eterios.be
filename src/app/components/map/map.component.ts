@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/services/upload.service';
 
@@ -13,6 +13,8 @@ export class MapComponent implements OnInit {
   lng: number = 4.489006697632691;
 
   selectedFiles!: FileList;
+
+  @ViewChild('modal') modal!:ElementRef;
   @Input() googleMarkers: any[] = [];
   googleMarkersSubscription!: Subscription;
 
@@ -30,6 +32,10 @@ export class MapComponent implements OnInit {
 
   showDetails(marker: any) {
     console.log("Marker clicked:" + JSON.stringify(marker))
+  }
+
+  openModal() {
+    this.modal.nativeElement.style.display = "block";
   }
 
   ngOnDestroy(): void {

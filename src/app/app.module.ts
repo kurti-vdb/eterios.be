@@ -24,6 +24,8 @@ import { AgmOverlays } from 'agm-overlays';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SuccessComponent } from './components/animations/success/success.component';
 import { ErrorComponent } from './components/animations/error/error.component';
+import { PhotoModalComponent } from './components/modals/photo-modal/photo-modal.component';
+import { ConcessionModalComponent } from './components/modals/concession-modal/concession-modal.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { ErrorComponent } from './components/animations/error/error.component';
     SidebarComponent,
     GridHeaderComponent,
     SuccessComponent,
-    ErrorComponent
+    ErrorComponent,
+    PhotoModalComponent,
+    ConcessionModalComponent
   ],
   imports: [
     BrowserModule,

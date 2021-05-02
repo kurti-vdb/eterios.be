@@ -1,0 +1,33 @@
+
+<i class="fas fa-ellipsis-h" (click)="openModal()"></i>
+
+
+<div  class="modal-wrapper">
+  <div #modal id="modal" class="modal">
+    <div class="wrapper">
+      <span class="close-btn" (click)="closeModal()"><i class="fas fa-times"></i></span>
+      <div class="detail-wrapper">
+        <div class="photo-container">
+          <img class="object-fit-cover" src="https://eterios.ams3.digitaloceanspaces.com/{{ marker.organisationID }}/thumbnail-250/{{ marker.filename }}" width="200" height="200" alt="{{ marker.filename }}"/>
+        </div>
+        <div class="photo-details">
+          <form>
+            <div class="control filled"><input type="text" value="{{ marker.filename }}" readonly/><label for="name">Filename:</label></div>
+            <div class="control filled"><input type="text"  value='{{ marker.uploaded | date:"dd-MM-yyyy HH:mm" }}' readonly/><label for="email">Uploaded:</label></div>
+            <div class="control filled"><input type="text" value="{{ marker.name }}" readonly/><label for="url">Uploader:</label></div>
+            <div class="control filled"><input type="text" value="{{ marker.lat }}" readonly/><label for="url">Latitude:</label></div>
+            <div class="control filled"><input type="text" value="{{ marker.lng }}" readonly/><label for="url">Longitude:</label></div>
+            <div class="control filled"><textarea name="" id="message"></textarea><label for="message">Opmerkingen</label></div>
+          </form>
+        </div>
+      </div>
+      <div class="add-deceased-header">
+        <h2 class="mb-0">
+            <button type="button" class="btn shadow-none" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"><i class="fa fa-plus"></i>Koppel een overleden persoon</button>
+        </h2>
+      </div>
+    </div>
+
+  </div>
+</div>
+

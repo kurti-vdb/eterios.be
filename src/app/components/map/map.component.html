@@ -1,7 +1,10 @@
 <agm-map [zoom]="16" [latitude]="lat" [longitude]="lng" [styles]="styles">
   <agm-map-type-control></agm-map-type-control>
-  <agm-overlay *ngFor="let marker of googleMarkers" [latitude]="marker.lat" [longitude]="marker.lng" class="tooltip" (click)="showDetails(marker)">
-      <span class="tooltiptext">{{ marker.filename }}</span>
+  <agm-overlay *ngFor="let marker of googleMarkers"
+    [latitude]="marker.lat"
+    [longitude]="marker.lng"
+    class="tooltip"
+    (markerClick)="openModal(marker)">
       <div class="bg one"></div>
       <div class="button one"></div>
   </agm-overlay>
