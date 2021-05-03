@@ -11,6 +11,8 @@ const uploadspaces = require('../utils/upload-spaces');
 const removeFromSpaces = require('../utils/remove-spaces');
 const exifr = require('exifr');
 const fs = require('fs');
+const geo = require('node-geo-distance');
+
 
 const photoDao = require("../dal/photo");
 const Photo = require("../models/mysql/photo");
@@ -45,6 +47,15 @@ router.get("/files", checkAuth.oAuth, function (req, res) {
 router.get("/photos", checkAuth.oAuth, function (req, res) {
   photoDao.getAllPhotosbyOrganisation(req.organisation, (photos) => {
     res.status(200).send(photos);
+  });
+});
+
+router.get("/calculateConcessions", function (req, res) {
+  photoDao.calculateConcessions( response => {
+
+    extractConcessions(response);
+
+    res.status(200).send(response);
   });
 });
 
@@ -104,7 +115,8 @@ router.delete('/:filename', checkAuth.oAuth, removeFromSpaces, (req, res) => {
 
 router.post('/uploadexif', checkAuth.oAuth, (req, res) => {
 
-  let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation);
+
+  let photo = new Photo(req.body.filename, req.body.exif.latitude, req.body.exif.longitude, req.userID, req.organisation, generateDate(req.body.filename));
 
   photoDao.insertPhoto(photo, (err, response) => {
     if (err) {
@@ -157,14 +169,101 @@ function generateAngularUser(fetchedUser) {
   }
 }
 
+
+const extractConcessionsOrg = (files) => {
+
+  console.log(files);
+
+  for(let i = 0; i < files.length-1; i++) {
+    var coord1 = {
+      latitude: files[i].lat,
+      longitude: files[i].lng
+    }
+
+    var coord2 = {
+      latitude: files[i+1].lat,
+      longitude: files[i+1].lng
+    }
+
+    console.log(geo.vincentySync(coord1, coord2));
+  }
+
+}
+
+
+const extractConcessions = (files) => {
+
+  console.log(files);
+
+  let concessions = [];
+
+  let temp = [];
+
+
+  while(files.length > 0 ) {
+
+    let element = files[0]
+    temp.push(element);
+    files.splice(0, 1);
+
+    for(let i = 1; i < files.length; i++) {
+
+      var coord1 = {
+        latitude: element.lat,
+        longitude: element.lng
+      }
+
+      var coord2 = {
+        latitude: files[i].lat,
+        longitude: files[i].lng
+      }
+
+      let distance = geo.vincentySync(coord1, coord2);
+      console.log(distance);
+      if (distance < 1 ) {
+        temp.push(files[i]);
+      }
+
+    }
+
+    //console.log(temp);
+    concessions.push([...temp]);
+    temp = [];
+
+  }
+
+  console.log(concessions);
+
+  return concessions;
+
+}
+
+
+
+
 function generateDate(filename) {
+
   // cut off extension
+  filename = filename.substring(0, filename.length - 10);
 
   //take last 18 chars
+  let last18 = filename.substr(filename.length - 18);
 
   // split _
+  let split = last18.split("_");
 
   // generate date
+  let year        = split[0].substring(0,4);
+  let month       = split[0].substring(4,6);
+  let day         = split[0].substring(6,8);
+  let hours       = split[1].substring(0,2);
+  let minutes     = split[1].substring(2,4);
+  let seconds     = split[1].substring(4,6);
+  let millis      = split[1].substring(6,9);
+
+  let date        = new Date(year, month-1, day, hours, minutes, seconds, millis);
+
+  return date;
 }
 
 module.exports = router;

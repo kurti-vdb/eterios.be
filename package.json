@@ -43,6 +43,7 @@
     "ngx-logger": "^4.2.1",
     "ngx-pagination": "^5.0.0",
     "ngx-translate-cache": "^9.0.2",
+    "node-geo-distance": "^1.2.0",
     "rand-token": "^1.0.1",
     "rxjs": "~6.6.0",
     "sharp": "^0.28.1",

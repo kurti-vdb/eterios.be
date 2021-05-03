@@ -114,6 +114,8 @@ button {
 
 
 
+
+
 .upload-file {
   cursor: pointer;
   text-align: center;
@@ -169,4 +171,17 @@ app-error, app-success {
 
 .messages-section {
   width: 374px;
+}
+
+.status {
+  background-color: #46bcec;
+  border-radius: 10px;
+  padding: 1px 10px;
+  color: #fff;
+  margin-right: 15px;
+}
+
+.last-el-grid {
+  display: flex;
+  flex-direction: row;
 }

@@ -70,3 +70,7 @@
   background-color: var(--search-area-bg);
   color: var(--main-color);
 }
+
+.username {
+  margin-right: 10px;
+}

@@ -8,7 +8,7 @@
 
       <div class="projects-section-header">
         <p>Ziekebeemdenstraat 4, 2800 Mechelen</p>
-        <p class="time">--</p>
+        <p class="time"><i class="fas fa-chevron-down"></i></p>
       </div>
 
       <app-map [fileInfos]="fileInfos" [googleMarkers]="googleMarkers" ></app-map>
@@ -134,7 +134,12 @@
           </div>
           <div class="uploader">{{ photo.name }}</div>
           <div (click)="deletePhoto(photo.filename)"><i class="fas fa-trash"></i></div>
-          <div><app-photo-modal [marker]="photo"></app-photo-modal></div>
+
+          <div class="last-el-grid">
+            <div class="status">Status</div>
+            <app-photo-modal [marker]="photo"></app-photo-modal>
+          </div>
+
       </div>
 
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
