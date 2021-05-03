@@ -34,8 +34,9 @@ export class MapComponent implements OnInit {
     console.log("Marker clicked:" + JSON.stringify(marker))
   }
 
-  openModal() {
+  openModal(marker: any) {
     //this.modal.nativeElement.style.display = "block";
+    console.log("Marker clicked:" + JSON.stringify(marker))
     document.getElementById('modal')!.style.display = "block";
   }
 

@@ -117,7 +117,7 @@ export class ConcessionDashboardComponent implements OnInit {
   addMarker(marker: any) {
     console.log(marker);
     this.googleMarkers = [...this.googleMarkers, marker];
-    this.photos = this.uploadService.getPhotos();
+    //this.photos = this.uploadService.getPhotos();
   }
 
   clearMarkers() {
