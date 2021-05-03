@@ -244,7 +244,7 @@ const extractConcessions = (files) => {
 function generateDate(filename) {
 
   // cut off extension
-  filename = filename.substring(0, filename.length - 10);
+  filename = filename.substring(0, filename.length - 6);
 
   //take last 18 chars
   let last18 = filename.substr(filename.length - 18);
