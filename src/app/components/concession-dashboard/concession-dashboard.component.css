@@ -185,3 +185,7 @@ app-error, app-success {
   display: flex;
   flex-direction: row;
 }
+
+.map-link {
+  margin-right: 20px;
+}

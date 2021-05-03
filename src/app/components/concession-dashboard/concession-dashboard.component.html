@@ -8,7 +8,7 @@
 
       <div class="projects-section-header">
         <p>Ziekebeemdenstraat 4, 2800 Mechelen</p>
-        <p class="time"><i class="fas fa-chevron-down"></i></p>
+        <p class="time" (click)="clearMarkers()"><i title="Verwijder markers op de kaart" class="fas fa-eraser"></i></p>
       </div>
 
       <app-map [fileInfos]="fileInfos" [googleMarkers]="googleMarkers" ></app-map>
@@ -136,7 +136,8 @@
           <div (click)="deletePhoto(photo.filename)"><i class="fas fa-trash"></i></div>
 
           <div class="last-el-grid">
-            <div class="status">Status</div>
+            <!--<div class="status">Status</div>-->
+            <div class="map-link" (click)="addMarker(photo)"><i class="fas fa-map"></i></div>
             <app-photo-modal [marker]="photo"></app-photo-modal>
           </div>
 

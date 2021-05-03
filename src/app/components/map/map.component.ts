@@ -35,7 +35,8 @@ export class MapComponent implements OnInit {
   }
 
   openModal() {
-    this.modal.nativeElement.style.display = "block";
+    //this.modal.nativeElement.style.display = "block";
+    document.getElementById('modal')!.style.display = "block";
   }
 
   ngOnDestroy(): void {

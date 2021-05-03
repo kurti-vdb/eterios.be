@@ -71,7 +71,6 @@ export class ConcessionDashboardComponent implements OnInit {
             this.progressInfos[idx].message = "Geen lat en lng exif data beschikbaar";
             this.progressInfos[idx].success = false;
             this.progressInfos[idx].isUploading = false;
-            //this.message.push("Geen lat en lng exif data beschikbaar, geen record weggeschreven in sql");
             return;
           }
 
@@ -82,10 +81,8 @@ export class ConcessionDashboardComponent implements OnInit {
             else if (event instanceof HttpResponse) {
               this.uploadService.uploadExif({ exif: exif, filename: file.name }).subscribe(
                 response => {
-
                   this.progressInfos[idx].message = event.body.message
-                  //this.message.push(event.body.message);
-
+                  console.log(response.photo);
                   this.googleMarkers = [...this.googleMarkers, response.photo];
                   this.fileInfos = this.uploadService.getFiles();
                   this.photos = this.uploadService.getPhotos();
@@ -96,21 +93,14 @@ export class ConcessionDashboardComponent implements OnInit {
                   this.progressInfos[idx].success = false;
                   this.progressInfos[idx].isUploading = false;
                   this.progressInfos[idx].message = error.error?.message?.sqlMessage;
-                  //this.message.push(error.error?.message?.sqlMessage);
                 }
               );
-
-              //this.fileInfos = this.uploadService.getFiles();
-              //this.photos = this.uploadService.getPhotos();
             }
           },(err) => {
             this.progressInfos[idx].value = 0;
             this.progressInfos[idx].success = false;
-            console.log("hier?");
             this.progressInfos[idx].isUploading = false;
             this.progressInfos[idx].message = "Er ging iets fout bij de upload, probeer opnieuw";
-            //const msg = 'Could not upload the file: ' + file.name;
-            //this.message.push(msg);
             this.fileInfos = this.uploadService.getFiles();
           });
 
@@ -122,6 +112,16 @@ export class ConcessionDashboardComponent implements OnInit {
     this.uploadService.deletePhoto(filename).subscribe(response => {
       this.photos = this.uploadService.getPhotos();
     })
+  }
+
+  addMarker(marker: any) {
+    console.log(marker);
+    this.googleMarkers = [...this.googleMarkers, marker];
+    this.photos = this.uploadService.getPhotos();
+  }
+
+  clearMarkers() {
+    this.googleMarkers = [];
   }
 
   private formatBytes(bytes: number, decimals = 2) {

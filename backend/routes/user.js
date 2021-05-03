@@ -194,11 +194,8 @@ const extractConcessionsOrg = (files) => {
 const extractConcessions = (files) => {
 
   console.log(files);
-
   let concessions = [];
-
   let temp = [];
-
 
   while(files.length > 0 ) {
 
