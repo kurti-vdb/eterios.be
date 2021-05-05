@@ -49,7 +49,7 @@ exports.deletePhoto = function(filename, callback) {
 
 exports.getPhotoByID = function(mysqlID) {
 
-    let sql = "SELECT * FROM photo WHERE `ID` = ?";
+    let sql = "SELECT * FROM photo WHERE `ID` = ? ORDER BY photo.ID DESC";
 
     pool.getConnection(function(err, connection) {
         if(err) {
@@ -72,7 +72,7 @@ exports.getPhotoByID = function(mysqlID) {
 
 exports.getAllPhotosbyOrganisation = function(organisation, callback) {
 
-  let sql = "SELECT * FROM photo JOIN user ON photo.uploaderID = user.mongoID WHERE photo.organisationID = ?";
+  let sql = "SELECT * FROM photo JOIN user ON photo.uploaderID = user.mongoID WHERE photo.organisationID = ? ORDER BY photo.ID DESC";
 
   pool.getConnection(function(err, connection) {
       if(err) {

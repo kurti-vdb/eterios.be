@@ -13,11 +13,11 @@
         <div class="photo-details">
           <form>
             <div class="control filled"><input type="text" value="{{ marker.filename }}" readonly/><label for="name">Filename:</label></div>
-            <div class="control filled"><input type="text"  value='{{ marker.uploaded | date:"dd-MM-yyyy HH:mm" }}' readonly/><label for="email">Uploaded:</label></div>
+            <div class="control filled"><input type="text"  value='{{ marker.uploaded | date:"dd-MM-yyyy HH:mm" }}' readonly/><label for="email">Created:</label></div>
             <div class="control filled"><input type="text" value="{{ marker.name }}" readonly/><label for="url">Uploader:</label></div>
             <div class="control filled"><input type="text" value="{{ marker.lat }}" readonly/><label for="url">Latitude:</label></div>
             <div class="control filled"><input type="text" value="{{ marker.lng }}" readonly/><label for="url">Longitude:</label></div>
-            <div class="control filled"><textarea name="" id="message"></textarea><label for="message">Opmerkingen</label></div>
+            <div class="control filled"><textarea></textarea><label for="message">Opmerkingen</label></div>
           </form>
         </div>
       </div>

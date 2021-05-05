@@ -2,11 +2,33 @@
   <agm-map-type-control></agm-map-type-control>
   <agm-overlay *ngFor="let marker of googleMarkers"
     [latitude]="marker.lat"
-    [longitude]="marker.lng"
-    class="tooltip"
-    (markerClick)="openModal(marker)">
+    [longitude]="marker.lng">
       <div class="bg one"></div>
       <div class="button one"></div>
+      <agm-info-window>
+        <h5>{{ marker.filename }}</h5>
+
+        <div class="detail-wrapper">
+          <div class="photo-container">
+            <img class="object-fit-cover" src="https://eterios.ams3.digitaloceanspaces.com/{{ marker.organisationID }}/thumbnail-250/{{ marker.filename }}" width="200" height="200" alt="{{ marker.filename }}"/>
+          </div>
+          <div class="photo-details">
+            <form>
+              <div class="control filled"><input type="text" value="{{ marker.lat }}" readonly/><label for="url">Latitude:</label></div>
+              <div class="control filled"><input type="text" value="{{ marker.lng }}" readonly/><label for="url">Longitude:</label></div>
+              <div class="control filled"><input type="text"  value='{{ marker.created | date:"dd-MM-yyyy HH:mm" }}' readonly/><label for="email">Created:</label></div>
+              <div class="control filled"><input type="text" value="{{ marker.name }}" readonly/><label for="url">Uploader:</label></div>
+              <div class="control filled"><textarea></textarea><label for="message">Opmerkingen</label></div>
+            </form>
+          </div>
+        </div>
+        <div class="add-deceased-header">
+          <h2 class="mb-0">
+              <button type="button" class="btn shadow-none" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"><i class="fa fa-plus"></i>Koppel een overleden persoon</button>
+          </h2>
+          </div>
+
+      </agm-info-window>
   </agm-overlay>
 </agm-map>
 

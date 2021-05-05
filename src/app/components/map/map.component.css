@@ -49,3 +49,49 @@ agm-map {
     opacity: 0;
   }
 }
+
+
+
+/* Info window */
+
+h5 {
+  margin: 10px;
+}
+.detail-wrapper {
+  display: flex;
+}
+
+.photo-details {
+  padding: 10px 20px;
+  color: #323338;
+  border-radius: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+form .control {
+  position: relative;
+  margin-bottom: 10px;
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+form input, form textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0 0 0px 0;
+}
+
+form .control label {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+
+form .filled label, form input:focus + label, form textarea:focus + label {
+  top: 0;
+  font-size: 12px;
+  color: #ccc;
+}

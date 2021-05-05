@@ -68,6 +68,9 @@ button {
 .grid {
   display: flex;
   flex-direction: column;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  color: #363344;
 }
 .photo-row {
   display: flex;
@@ -89,6 +92,7 @@ button {
   align-items: center; /* Vertical center alignment */
   justify-content: center; /* Horizontal center alignment */
   color: #45556f;
+  color: #363344;
   font-size: 14px;
 }
 
@@ -96,6 +100,7 @@ button {
 .photo-row .filename {
   margin-left: 10px;
   font-size: 14px;
+  min-width: 400px;
 }
 .photo-row .created {
   margin-left: 20px;
@@ -109,12 +114,8 @@ button {
 }
 .photo-row div:last-child {
   margin-left: auto;
-  color: #8a8899;
+
 }
-
-
-
-
 
 .upload-file {
   cursor: pointer;
@@ -189,3 +190,29 @@ app-error, app-success {
 .map-link {
   margin-right: 20px;
 }
+
+.grid-pagination /deep/ ul, ol {
+  padding-left: 0px;
+}
+
+pagination-controls /deep/ .ngx-pagination {
+  padding: 0;
+  margin: 40px auto;
+  text-align: center;
+}
+
+pagination-controls /deep/ .ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #46bcec;
+  color: #fefefe;
+  cursor: default;
+}
+
+pagination-controls {
+  margin-bottom: 200px;
+}
+
+.created {
+  min-width: 125px;
+}
+
