@@ -26,6 +26,7 @@ import { SuccessComponent } from './components/animations/success/success.compon
 import { ErrorComponent } from './components/animations/error/error.component';
 import { PhotoModalComponent } from './components/modals/photo-modal/photo-modal.component';
 import { ConcessionModalComponent } from './components/modals/concession-modal/concession-modal.component';
+import { NavDropdownComponent } from './components/navigation/nav-dropdown/nav-dropdown.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ConcessionModalComponent } from './components/modals/concession-modal/c
     SuccessComponent,
     ErrorComponent,
     PhotoModalComponent,
-    ConcessionModalComponent
+    ConcessionModalComponent,
+    NavDropdownComponent
   ],
   imports: [
     BrowserModule,
