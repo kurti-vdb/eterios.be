@@ -50,14 +50,16 @@ router.get("/photos", checkAuth.oAuth, function (req, res) {
   });
 });
 
-router.get("/calculateConcessions", function (req, res) {
+router.get("/calculateConcessions/:distance?", function (req, res) {
   photoDao.calculateConcessions( response => {
 
-    extractConcessions(response);
+    let result = extractConcessions(response, req.params.distance);
 
-    res.status(200).send(response);
+    res.status(200).send(result);
   });
 });
+
+
 
 router.post("/login", (req, res, next) => {
 
@@ -191,11 +193,20 @@ const extractConcessionsOrg = (files) => {
 }
 
 
-const extractConcessions = (files) => {
+const extractConcessions = (files, distanceBetween) => {
 
-  console.log(files);
+  let _distanceBetween = 1;
+
+  if (distanceBetween && Number.parseFloat(distanceBetween)) {
+    _distanceBetween = distanceBetween;
+  }
+
   let concessions = [];
   let temp = [];
+  let indexesToBeRemoved = [];
+  let initialLength = files.length;
+
+  console.log("-------------------------------------------------------------------------------------")
 
   while(files.length > 0 ) {
 
@@ -203,7 +214,7 @@ const extractConcessions = (files) => {
     temp.push(element);
     files.splice(0, 1);
 
-    for(let i = 1; i < files.length; i++) {
+    for(let i = 0; i < files.length; i++) {
 
       var coord1 = {
         latitude: element.lat,
@@ -216,20 +227,26 @@ const extractConcessions = (files) => {
       }
 
       let distance = geo.vincentySync(coord1, coord2);
-      console.log(distance);
-      if (distance < 1 ) {
+      console.log(element.filename + "-" + files[i].filename + ": " + distance);
+      if (distance < _distanceBetween ) {
         temp.push(files[i]);
+        indexesToBeRemoved.push(i);
       }
+      console.log(files)
+    }
 
+    for (var i = indexesToBeRemoved.length -1; i >= 0; i--) {
+      files.splice(indexesToBeRemoved[i], 1);
     }
 
     //console.log(temp);
     concessions.push([...temp]);
     temp = [];
+    indexesToBeRemoved = [];
 
   }
-
-  console.log(concessions);
+  console.log("*****************************************************************************************************")
+  console.log("Final result", concessions);
 
   return concessions;
 
@@ -241,7 +258,7 @@ const extractConcessions = (files) => {
 function generateDate(filename) {
 
   // cut off extension
-  filename = filename.substring(0, filename.length - 6);
+  filename = filename.substring(0, filename.length - 10);
 
   //take last 18 chars
   let last18 = filename.substr(filename.length - 18);
