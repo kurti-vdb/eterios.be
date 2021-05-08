@@ -17,7 +17,10 @@
 }
 
 .grid {
-  margin: 50px 25px 0 25px;;
+  margin: 5px 25px 0 25px;;
+}
+.grid p {
+  margin-bottom: 45px;
 }
 
 .button-wrapper {
@@ -216,3 +219,7 @@ pagination-controls {
   min-width: 125px;
 }
 
+.concession-row {
+  margin-bottom: 20px;
+  border-left: 5px solid var(--link-color-active-bg);
+}

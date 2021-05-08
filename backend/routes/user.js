@@ -50,11 +50,16 @@ router.get("/photos", checkAuth.oAuth, function (req, res) {
   });
 });
 
-router.get("/calculateConcessions/:distance?", function (req, res) {
-  photoDao.calculateConcessions( response => {
-
+router.get("/calculateConcessions/:distance?", checkAuth.oAuth, function (req, res) {
+  photoDao.calculateConcessions(req.organisation, (response) => {
     let result = extractConcessions(response, req.params.distance);
+    res.status(200).send(result);
+  });
+});
 
+router.get("/calculateConcessions2/:distance?", function (req, res) {
+  photoDao.calculateConcessions( (response) => {
+    let result = extractConcessions(response, req.params.distance);
     res.status(200).send(result);
   });
 });

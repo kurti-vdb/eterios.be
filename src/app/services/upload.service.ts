@@ -13,9 +13,12 @@ export class UploadService {
   selectedFiles!: FileList;
   private googleMarkers: any[] = [];
   private photos: any[] = [];
+  private concessions: any[] = [];
+
   private selectedFilesSubject = new Subject<FileList>();
   private googleMarkersSubject = new Subject<any[]>();
   private photosSubject = new Subject<any[]>();
+  private concessionsSubject = new Subject<any[]>();
 
   public photoEmitter = new Subject<any>();
   public getPhotoEmitter() {
@@ -31,6 +34,10 @@ export class UploadService {
   }
 
   getPhotosSubject() {
+    return this.photosSubject.asObservable();
+  }
+
+  getConcessionsSubject() {
     return this.photosSubject.asObservable();
   }
 
@@ -100,19 +107,6 @@ export class UploadService {
       )
   }
 
-  getFotos() {
-    return this.http.get<any>(`${environment.apiUrl}/api/auth/photos`)
-      .pipe(
-        tap(response => {
-
-        }),
-        catchError (err => {
-          this.logger.error(err);
-          return throwError(err);
-        })
-      )
-  }
-
   getAllPhotos() {
     return this.http.get<any>(`${environment.apiUrl}/api/auth/photos`)
       .pipe(
@@ -127,6 +121,19 @@ export class UploadService {
       )
   }
 
+  getConcessions(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/auth/calculateconcessions`)
+      .pipe(
+        tap(response => {
+          this.concessions= response;
+          this.concessionsSubject.next([...this.concessions]);
+        }),
+        catchError (err => {
+          this.logger.error(err);
+          return throwError(err);
+        })
+      )
+  }
 
   getSpacesUrl() {
     return '';

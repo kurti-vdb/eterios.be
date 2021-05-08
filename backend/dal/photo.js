@@ -93,9 +93,9 @@ exports.getAllPhotosbyOrganisation = function(organisation, callback) {
   });
 };
 
-exports.calculateConcessions = function(callback) {
+exports.calculateConcessions = function(organisation, callback) {
 
-  let sql = "SELECT * FROM photo";
+  let sql = "SELECT * FROM photo WHERE photo.organisationID = ?";
 
   pool.getConnection(function(err, connection) {
       if(err) {
@@ -103,7 +103,7 @@ exports.calculateConcessions = function(callback) {
         callback(true);
         return;
       }
-      connection.query(sql, function(err, result) {
+      connection.query(sql, [organisation], function(err, result) {
         connection.release();
         if(err) {
           logger.error(err);

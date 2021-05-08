@@ -81,11 +81,14 @@
 
   <div class="grid">
 
+    <h4 *ngIf="activeRoute === ERoute.Photos;">Foto's grid</h4>
+    <h4 *ngIf="activeRoute === ERoute.Concessions;">Concessions grid</h4>
+    <p *ngIf="activeRoute === ERoute.Concessions;">Berekend uit de lijst van foto's/organisation op basis van 1 meter afstand. Deze concessies steken nog niet in de database.</p>
 
     <div class="projects-section-line">
       <div class="projects-status">
         <div class="item-status">
-          <span class="status-number">0</span>
+          <span class="status-number">{{ (concessions | async)?.length }}</span>
           <span class="status-type">Concessies</span>
         </div>
         <div class="item-status">
@@ -122,7 +125,7 @@
     </div>
 
 
-
+    <ng-container *ngIf="activeRoute === ERoute.Photos;">
       <div class="photo-row" *ngFor="let photo of (photos | async) | paginate: { itemsPerPage: 6, currentPage: page }">
           <div>
             <img src="https://eterios.ams3.digitaloceanspaces.com/{{ photo.organisationID }}/thumbnail-250/{{ photo.filename }}" width="40" height="40" alt="{{ photo.filename }}"/>
@@ -140,13 +143,41 @@
             <div class="map-link" (click)="addMarker(photo)"><i class="fas fa-map"></i></div>
             <app-photo-modal [marker]="photo"></app-photo-modal>
           </div>
-
       </div>
-
       <pagination-controls
         (pageChange)="page = $event"
         previousLabel="{{ 'Vorige' | translate }}"
-        nextLabel="{{ 'Volgende' | translate }}"></pagination-controls>
+        nextLabel="{{ 'Volgende' | translate }}">
+      </pagination-controls>
+    </ng-container>
+
+    <ng-container *ngIf="activeRoute === ERoute.Concessions;">
+      <div class="concession-row" *ngFor="let concession of (concessions | async) | paginate: { itemsPerPage: 5, currentPage: page }">
+        <div class="photo-row" *ngFor="let photo of concession">
+          <div>
+            <img src="https://eterios.ams3.digitaloceanspaces.com/{{ photo.organisationID }}/thumbnail-250/{{ photo.filename }}" width="40" height="40" alt="{{ photo.filename }}"/>
+          </div>
+          <div class="filename">{{ photo.filename }}</div>
+          <div class="created">{{ photo.created | date:"dd-MM-yyyy HH:mm" }}</div>
+          <div class="size">
+            <i (click)="downloadImage(photo.organisationID, photo.filename)" class="fas fa-download" aria-hidden="true"></i>
+          </div>
+          <div class="uploader">{{ photo.name }}</div>
+          <div (click)="deletePhoto(photo.filename)"><i class="fas fa-trash"></i></div>
+
+          <div class="last-el-grid">
+            <!--<div class="status">Status</div>-->
+            <div class="map-link" (click)="addMarker(photo)"><i class="fas fa-map"></i></div>
+            <app-photo-modal [marker]="photo"></app-photo-modal>
+          </div>
+        </div>
+      </div>
+      <pagination-controls
+        (pageChange)="page = $event"
+        previousLabel="{{ 'Vorige' | translate }}"
+        nextLabel="{{ 'Volgende' | translate }}">
+      </pagination-controls>
+    </ng-container>
 
   </div>
 

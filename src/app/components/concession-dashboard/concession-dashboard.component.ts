@@ -5,6 +5,9 @@ import { AuthService } from 'src/app/services/authservice';
 import { UploadService } from 'src/app/services/upload.service';
 import exifr from 'exifr';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { EGrid } from 'src/app/models/enums/grid';
+import { ActivatedRoute, ɵassignExtraOptionsToRouter } from '@angular/router';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-concession-dashboard',
@@ -16,8 +19,11 @@ export class ConcessionDashboardComponent implements OnInit {
   public organisation?: string;
   public user?: string;
   page: number = 1;
+  ERoute = EGrid;
+  activeRoute = this.ERoute.Photos
 
   photos: Observable<any[]> = new Observable();
+  concessions: Observable<any[]> = new Observable();
   fileInfos?: Observable<any[]>;
 
   selectedFiles!: FileList;
@@ -29,7 +35,8 @@ export class ConcessionDashboardComponent implements OnInit {
   constructor(
     private uploadService: UploadService,
     private logger: NGXLogger,
-    private authService:AuthService
+    private authService:AuthService,
+    public route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +44,24 @@ export class ConcessionDashboardComponent implements OnInit {
     this.user = this.authService.user.username;
     this.fileInfos = this.uploadService.getFiles();
     this.photos = this.uploadService.getPhotos();
+    this.concessions = this.uploadService.getConcessions();
+
+    this.route.url.pipe(withLatestFrom(this.route.paramMap, this.route.queryParamMap)).subscribe(([url, paramMap, queryParamMap]) => {
+
+      if (url && url.length > 0) {
+        console.log(url);
+
+        if (url[1] && url[1].path === 'photos') {
+          this.activeRoute = this.ERoute.Photos;
+        }
+        if (url[1] && url[1].path === 'concessions') {
+          this.activeRoute = this.ERoute.Concessions;
+        }
+
+      }
+
+    });
+
   }
 
   selectFiles(event: any): void {
