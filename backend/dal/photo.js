@@ -115,3 +115,26 @@ exports.calculateConcessions = function(organisation, callback) {
       });
   });
 };
+
+exports.calculateConcessions2 = function(callback) {
+
+  let sql = "SELECT * FROM photo";
+
+  pool.getConnection(function(err, connection) {
+      if(err) {
+        logger.error(err);
+        callback(true);
+        return;
+      }
+      connection.query(sql, function(err, result) {
+        connection.release();
+        if(err) {
+          logger.error(err);
+          callback(true);
+          return;
+        }
+        //logger.info(result);
+        callback(result);
+      });
+  });
+};
