@@ -21,6 +21,7 @@ const Photo = require("../models/mysql/photo");
 const router = express.Router();
 
 router.use((req, res, next) => {
+
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
@@ -58,7 +59,7 @@ router.get("/calculateConcessions/:distance?", checkAuth.oAuth, function (req, r
 });
 
 router.get("/calculateConcessions2/:distance?", function (req, res) {
-  photoDao.calculateConcessions( (response) => {
+  photoDao.calculateConcessions2( (response) => {
     let result = extractConcessions(response, req.params.distance);
     res.status(200).send(result);
   });

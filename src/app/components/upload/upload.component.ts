@@ -84,14 +84,11 @@ export class UploadComponent implements OnInit, OnDestroy {
               this.uploadService.uploadExif(upload).subscribe(response => {
                 this.fileInfos = this.uploadService.getFiles();
                 this.photos = this.uploadService.getPhotos();
-
-
                 this.messageEvent.emit([...this.fotos]);
               });
 
               this.fileInfos = this.uploadService.getFiles();
               this.photos = this.uploadService.getPhotos();
-
             }
           },(err) => {
             this.progressInfos[idx].value = 0;
